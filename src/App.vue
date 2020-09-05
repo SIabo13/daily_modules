@@ -19,29 +19,15 @@
         
         <div class="row pt-5">
           <div class="col-md-4">
-            <div class="content-box bg-light">
-              <h2>Weather</h2>
-              <img class="img-fluid m-3" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS9V5ISyZ2rQ-484bvqVLg0oN29LSGfOUBhbg&usqp=CAU" alt="">
-              <h4>Current Temp: 60</h4>
-              <h4>Wind Speed: 5 mph <b>SW</b></h4>
-              <button class="btn btn-primary mt-3">See 7 day forecast</button>
-          </div>
+
+            <app-weather></app-weather>
+
           </div>
             
           <div class="col-md-8">
-            <div class="content-box bg-light">
-              <h2>News</h2>
-              <img class="m-4" src="https://static01.nyt.com/images/2020/09/04/business/04virus-briefing-dining/merlin_176577702_84a94391-de15-4aef-8cae-03d7ce36c966-mediumThreeByTwo252.jpg?quality=100&auto=webp" alt="">
-              <p>New Jersey Resumes Indoor Dining With Limits
-                Gov. Philip D. Murphy of New Jersey announced restaurants and bars in the state could resume indoor dining with capacity limits. Smoking inside state casinos remains prohibited.
-                
-                By NEW JERSEY OFFICE OF THE GOVERNOR VIA YOUTUBE
-                
-                Sept. 4, 2020</p>
-                <button class="btn btn-primary mt-3">Read More</button>
 
+            <app-news></app-news>
 
-          </div>
           </div>
              
                 
@@ -49,36 +35,13 @@
 
             <div class="row pt-5">
               <div class="col-md-6">
-                <div class="content-box bg-light">
-                  <h2>To Do</h2>
-                  <ul class="list-group">
-                    <li class="list-group-item">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus</li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
-                  </ul>
-                  <button class="btn btn-primary mt-3">Add TODO</button>
-              </div>
+
+                <app-todo></app-todo>
+
               </div>
                 
               <div class="col-md-6"> 
-                <div class="content-box bg-light">
-                  <h2>Create Note</h2>
-                  <form>
-                    <div class="form-group text-left">
-                      <label for="exampleInputEmail1" >Title</label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      <small id="emailHelp" class="form-text text-muted">Whats on your mind?</small>
-                    </div>
-                    <div class="md-form text-left">
-                      <label for="form7" >Body</label>
-                      <textarea id="form7" class="md-textarea form-control" rows="3"></textarea>   
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
-                  </form>
-              </div>
+                <app-notes></app-notes>
               </div>
                  
                     
@@ -90,41 +53,31 @@
 </template>
 
 <script>
+import Budget from './assets/components/Budget.vue';
+import News from './assets/components/News.vue';
+import Notes from './assets/components/Notes.vue';
+import Todo from './assets/components/Todo.vue';
+import Weather from './assets/components/Weather.vue';
+
+
+
 export default {
   name: 'app',
+  components:{
+    appBudget: Budget,
+    appNews: News,
+    appNotes: Notes,
+    appTodo: Todo,
+    appWeather:Weather
+  },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+
     }
   }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 </style>
