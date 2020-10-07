@@ -1,47 +1,61 @@
 <template>
 <div class="container pt-5">
     <div class="row">
-        <div class="col">
+        <div class="col-12">
 
             <div class="content-box bg-light">
                 <h2 class="text-center">Budget</h2>
                 <div class="display">
-                    <h2 class="text-center display-3">500</h2>
+                    <h2 class="text-center display-3">{{calcGrandTotal}}</h2>
                 </div>
-                <div class="income-total">Total Income: 200</div>
-                <div class="expense-total">Total Expense:-400</div>
+                <div class="income-total">Total Income: {{totalIncome}}</div>
+                <div class="expense-total">Total Expense: {{totalExpense}}</div>
+
+                <div id="inputs">
+
+                    <select v-model="input.type" class="browser-default custom-select m-3" id="type">
+
+                        <option value="income">+</option>
+                        <option value="expense">-</option>
+
+                    </select>
+
+                    <input ref="description" type="text" v-model="input.description" class="form-control m-3" id="description" placeholder="description">
+
+                    <input @keyup.enter="addToList" type="number" v-model="input.value" class="form-control m-3" id="value">
+
+                    <button @click="addToList" class="btn btn-primary m-3" id="budget_submit">Submit</button>
+
+                </div>
+                <!-- <p>{{input.description}}</p> -->
+                <button @click="saveData" class="btn btn-success">Save Data</button>
+
             </div>
 
         </div>
     </div>
 
     <div class="row pt-5">
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-12">
             <div class="content-box bg-light">
                 <h2 class="text-center">Income</h2>
 
-                <div class="list-box" v-show="!showForm">
+                <div class="list-box">
+
                     <ul class="list-group">
-                        <div class="list-box">
-
-                            <ul class="list-group">
-                                <app-list-item v-for="(item,index) in todoList">{{ item }}<span @click="todoList.splice(index,1)" class="delete-card">X</span></app-list-item>
-                                <li v-for="(income,index) in allIncomes" class="list-group-item">{{income.description}} ${{income.value}} <span @click="allIncomes.splice(index,1)" class="delete-card">X</span></li>
-                            </ul>
-                        </div>
-
+                        <li :key="index" v-for="(income,index) in allIncomes" class="list-group-item income-item">{{income.description}} ${{income.value}} <span @click="allIncomes.splice(index,1)" class="delete-card">X</span></li>
                     </ul>
+
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-12">
             <div class="content-box bg-light">
                 <h2 class="text-center">Expense</h2>
                 <div class="list-box">
 
                     <ul class="list-group">
-                        <app-list-item v-for="(item,index) in todoList">{{ item }}<span @click="todoList.splice(index,1)" class="delete-card">X</span></app-list-item>
-                        <li v-for="(expense,index) in allExpenses" class="list-group-item">{{expense.description}} ${{expense.value}} <span @click="allExpenses.splice(index,1)" class="delete-card">X</span></li>
+                        <li :key="index" v-for="(expense,index) in allExpenses" class="list-group-item expense-item">{{expense.description}} - ${{expense.value}} <span @click="allExpenses.splice(index,1)" class="delete-card">X</span></li>
                     </ul>
                 </div>
             </div>
@@ -54,36 +68,105 @@
 export default {
     data() {
         return {
+            grandTotal: 0,
+            totalIncome: 0,
+            totalExpense: 0,
 
-            allExpenses: [{
-                    type: "expense",
-                    description: "Purchased the new iphone",
-                    value: 200
-                },
-                {
-                    type: "expense",
-                    description: "Purchased the new iphone",
-                    value: 200
-                },
-
-            ],
-            allIncomes: [{
-                type: "income",
-                description: "Recieved Paycheck",
-                value: 600
-            }],
+            allExpenses: [],
+            allIncomes: [],
 
             input: {
-                type: null,
+                type: 'income',
                 description: null,
-                value: null
+                value: 0
             }
         }
+    },
+    methods: {
+        addToList() {
+
+            if (!this.input.description == " " && !this.input.value == '0') {
+                if (this.input.type == "income") {
+                    this.allIncomes.push({
+                        type: this.input.type,
+                        description: this.input.description,
+                        value: this.input.value
+                    });
+                    this.totalIncome += parseInt(this.input.value);
+                } else if (this.input.type == "expense") {
+                    this.allExpenses.push({
+                        type: this.input.type,
+                        description: this.input.description,
+                        value: this.input.value
+                    });
+                    this.totalExpense -= parseInt(this.input.value);
+                }
+
+            }
+
+            console.log(this.allIncomes);
+
+            this.input.description = null;
+            this.input.value = 0;
+            this.$refs.description.focus();
+
+        },
+        saveData() {
+
+            fetch('https://modular-planner.firebaseio.com/budget.json', {
+                method: 'POST',
+                headers: {
+                    "Content-type": 'application/json'
+                },
+                body: JSON.stringify({
+                    grandTotal: this.calcGrandTotal,
+                    allIncomes: this.allIncomes,
+                    allExpenses: this.allExpenses
+                }),
+
+            }).then(response => {
+                if (response.ok) {
+                    //....
+                } else {
+                    throw new Error('Could not save data!');
+                }
+            }).catch(error => {
+                console.log(error);
+                this.error = error.message;
+            })
+        }
+    },
+    computed: {
+        calcGrandTotal() {
+            return this.grandTotal = this.totalIncome + this.totalExpense;
+        },
+
     }
 }
 </script>
 
 <style lang="scss" scoped>
+.expense-item {
+    background-color: #ff00006b;
+}
+
+.income-item {
+    background-color: #00800070;
+}
+
+#value {
+    width: 20%
+}
+
+#type {
+    width: 20%;
+}
+
+#inputs {
+    display: flex;
+    padding: 1rem;
+}
+
 li:hover {
     background: grey;
     color: white;

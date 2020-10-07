@@ -5,13 +5,15 @@
     <div>
         <div class="list-box" v-show="!showForm">
 
-            
             <ul class="list-group">
                 <app-list-item v-for="(item,index) in todoList">{{ item }}<span @click="todoList.splice(index,1)" class="delete-card">X</span></app-list-item>
 
             </ul>
         </div>
         <button v-show="!showForm" @click="showForm = !showForm" class="btn btn-primary mt-3">Add TODO</button>
+        <button @click="saveList" class="btn btn-primary mt-3">Save List</button>
+        <button @click="loadTodoList" class="btn btn-primary mt-3">Load List</button>
+        <button @click="deleteCache" class="btn btn-primary mt-3">delete List</button>
 
     </div>
 
@@ -39,11 +41,10 @@ export default {
     data() {
         return {
             itemInput: null,
-            todoList: [
-                'walk the dog today',
-                'work on appliction'
-            ],
-            showForm: false
+            todoList: [],
+            showForm: false,
+            isLoading: false,
+            listCache: []
         }
     },
     methods: {
@@ -54,6 +55,87 @@ export default {
                 this.$refs.input.focus()
             }
 
+        },
+        saveList() {
+            if (this.todoList.length > 0) {
+                fetch('https://modular-planner.firebaseio.com/todos.json', {
+                    method: 'POST',
+                    headers: {
+                        "Content-type": 'application/json'
+                    },
+                    body: JSON.stringify({
+                        todoList: this.todoList,
+
+                    }),
+
+                }).then(response => {
+                    if (response.ok) {
+                        //....
+                    } else {
+                        throw new Error('Could not save data!');
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    this.error = error.message;
+                })
+
+            }
+        },
+        deleteCache() {
+            // Deletes third oldest entry
+            if (this.listCache.length > 1) {
+                fetch('https://modular-planner.firebaseio.com/todos.json', {
+                        method: 'DELETE'
+
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Delete third oldest entry and todo list
+                        for (const id in data) {
+                            console.log(data.todoList)
+
+                        }
+
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.error = error.message;
+                    })
+
+            }
+        },
+        loadTodoList() {
+            // Repopulate the list onload from database
+            fetch('https://modular-planner.firebaseio.com/todos.json')
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+
+                .then((data) => {
+                    this.isLoading = false;
+                    const results = [];
+
+                    let list = data[Object.keys(data)[Object.keys(data).length -1]];
+                    console.log(list);
+
+                    for (let i = 0; i < list.todoList.length; i++) {
+                        results.push(list.todoList[i])
+                    }
+
+                    console.log(results);
+                    //    console.log(this.listCache)
+                    this.todoList = results;
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.isLoading = false;
+                    this.error = "Failed to fetch data - please try again later";
+                });
+        },
+        mounted() {
+
         }
     }
 }
@@ -62,7 +144,7 @@ export default {
 <style lang="scss" scoped>
 li:hover {
     background: grey;
-    color:white;
+    color: white;
 }
 
 .list-box {
@@ -70,8 +152,7 @@ li:hover {
     height: 400px;
 }
 
-
- .delete-card {
+.delete-card {
     position: absolute;
     right: 0;
     top: 0;
@@ -80,25 +161,26 @@ li:hover {
     transition: all 0.5s ease;
     cursor: pointer;
 
-    &:hover, .error {
-    opacity: 1;
-    transform: rotate(360deg);
-    
-  } 
-  }
-  
+    &:hover,
+    .error {
+        opacity: 1;
+        transform: rotate(360deg);
 
-  .flip-enter-active {
+    }
+}
+
+.flip-enter-active {
     transition: all 0.4s ease;
-  }
-  
-  .flip-leave-active {
+}
+
+.flip-leave-active {
     display: none;
-  }
-  
-  .flip-enter, .flip-leave {
+}
+
+.flip-enter,
+.flip-leave {
     transform: rotateY(180deg);
     opacity: 0;
-  
-  }
+
+}
 </style>

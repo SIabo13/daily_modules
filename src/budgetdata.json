@@ -1,0 +1,21 @@
+{
+  "grandTotal": 1370,
+  "allIncomes": [{
+    "type": "income",
+    "description": "chicken nugget",
+    "value": "600"
+  }, {
+    "type": "income",
+    "description": "paycheck",
+    "value": "800"
+  }],
+  "allExpenses": [{
+    "type": "expense",
+    "description": "carpayment",
+    "value": "500"
+  }, {
+    "type": "expense",
+    "description": "eating out ",
+    "value": "30"
+  }]
+}
