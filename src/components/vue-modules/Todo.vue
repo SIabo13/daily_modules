@@ -12,7 +12,6 @@
         </div>
         <button v-show="!showForm" @click="showForm = !showForm" class="btn btn-primary mt-3">Add TODO</button>
         <button @click="saveList" class="btn btn-primary mt-3">Save List</button>
-        <button @click="loadTodoList" class="btn btn-primary mt-3">Load List</button>
         <button @click="deleteCache" class="btn btn-primary mt-3">delete List</button>
 
     </div>
@@ -83,26 +82,21 @@ export default {
         },
         deleteCache() {
             // Deletes third oldest entry
-            if (this.listCache.length > 1) {
+            
                 fetch('https://modular-planner.firebaseio.com/todos.json', {
                         method: 'DELETE'
 
                     })
                     .then(response => response.json())
-                    .then(data => {
+                    .then(response => {
                         // Delete third oldest entry and todo list
-                        for (const id in data) {
-                            console.log(data.todoList)
-
-                        }
+                        console.log(response)
+                       
 
                     })
-                    .catch(error => {
-                        console.log(error);
-                        this.error = error.message;
-                    })
+                    
 
-            }
+            
         },
         loadTodoList() {
             // Repopulate the list onload from database
@@ -124,7 +118,6 @@ export default {
                         results.push(list.todoList[i])
                     }
 
-                    console.log(results);
                     //    console.log(this.listCache)
                     this.todoList = results;
                 })
@@ -134,10 +127,11 @@ export default {
                     this.error = "Failed to fetch data - please try again later";
                 });
         },
-        mounted() {
-
+        
+    },
+    mounted() {
+            this.loadTodoList();
         }
-    }
 }
 </script>
 

@@ -1,21 +1,86 @@
 <template>
   <div id="app">
     <app-nav></app-nav>
-    <router-view></router-view>
+    
+
+    <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <app-side-bar></app-side-bar>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div class="container-fluid" id="page-content-wrapper">
+
+      <!-- forces all content to the left -->
+   <router-view></router-view>
+      
+    </div>
+
+
+    
+    <!-- /#page-content-wrapper -->
+
+  </div>
   </div>
 </template>
 
 <script>
 import Navigation from './components/vue-modules/Navigation.vue'
+import Sidebar from './components/vue-modules/Sidebar.vue'
 
 export default {
   name: 'app',
  components:{
-   appNav:Navigation
+   appNav:Navigation,
+   appSideBar:Sidebar
  }
 }
 </script>
 
-<style lang="scss">
+<style>
+#wrapper {
+    overflow-x: hidden;
+ }
 
+/* #sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+} */
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}
 </style>
