@@ -6,7 +6,7 @@
         <div class="list-box" v-show="!showForm">
 
             <ul class="list-group">
-                <app-list-item v-for="(item,index) in todoList">{{ item }}<span @click="todoList.splice(index,1)" class="delete-card">X</span></app-list-item>
+                <app-list-item :key="index" v-for="(item,index) in todoList">{{ item }}<span @click="todoList.splice(index,1)" class="delete-card">X</span></app-list-item>
 
             </ul>
         </div>
@@ -112,7 +112,6 @@ export default {
                     const results = [];
 
                     let list = data[Object.keys(data)[Object.keys(data).length -1]];
-                    console.log(list);
 
                     for (let i = 0; i < list.todoList.length; i++) {
                         results.push(list.todoList[i])
@@ -135,7 +134,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 li:hover {
     background: grey;
     color: white;
