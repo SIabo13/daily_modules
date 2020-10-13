@@ -10,7 +10,7 @@
     <!-- /#sidebar-wrapper -->
 
     <!-- Page Content -->
-    <div class="container-fluid" id="page-content-wrapper">
+    <div class="container" id="page-content-wrapper">
 
       <!-- forces all content to the left -->
    <router-view></router-view>
@@ -43,14 +43,7 @@ export default {
     overflow-x: hidden;
  }
 
-/* #sidebar-wrapper {
-  min-height: 100vh;
-  margin-left: -15rem;
-  -webkit-transition: margin .25s ease-out;
-  -moz-transition: margin .25s ease-out;
-  -o-transition: margin .25s ease-out;
-  transition: margin .25s ease-out;
-} */
+
 
 #sidebar-wrapper .sidebar-heading {
   padding: 0.875rem 1.25rem;
@@ -58,7 +51,7 @@ export default {
 }
 
 #sidebar-wrapper .list-group {
-  width: 15rem;
+  width: 12rem;
 }
 
 #page-content-wrapper {

@@ -2,7 +2,7 @@
   
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+        <button @click="toggleMenu" class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -23,15 +23,28 @@
 </template>
 
 <script>
-import Search from './Search.vue';
-import Dropdown from './Dropdown.vue'
+
+import { bus } from '../../main';
+import Dropdown from './Dropdown.vue';
+import Search from './Search';
+
 export default {
   components:{
-    appSearch:Search,
-    appDropdown: Dropdown
+    appDropdown:Dropdown,
+    appSearch:Search
+  },
+  
+  methods: {
+    toggleMenu(){
+      bus.$emit('toggleSidebar',false)
+    }
   }
 }
 </script>
+
+
+
+
 
 <style scoped>
 
@@ -65,6 +78,6 @@ export default {
   }
 }
 
-</style>>
+
 
 </style>

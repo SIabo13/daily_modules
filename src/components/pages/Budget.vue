@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <div class="row pt-5">
+    <div class="row" id="inc-exp">
         <div class="col-md-6 col-sm-12">
             <div class="content-box bg-light">
                 <h2 class="text-center">Income</h2>
@@ -43,7 +43,7 @@
                 <div class="list-box">
 
                     <ul class="list-group">
-                        <li :key="index" v-for="(income,index) in allIncomes" class="list-group-item income-item">{{income.description}} ${{income.value}} <span @click="allIncomes.splice(index,1)" class="delete-card">X</span></li>
+                        <li :key="index" v-for="(income,index) in allIncomes" class="list-group-item income-item">{{income.description}} ${{income.value}} <span @click="deleteItem('inc',index,income.value)" class="delete-card">X</span></li>
                     </ul>
 
                 </div>
@@ -55,7 +55,7 @@
                 <div class="list-box">
 
                     <ul class="list-group">
-                        <li :key="index" v-for="(expense,index) in allExpenses" class="list-group-item expense-item">{{expense.description}} - ${{expense.value}} <span @click="allExpenses.splice(index,1)" class="delete-card">X</span></li>
+                        <li :key="index" v-for="(expense,index) in allExpenses" class="list-group-item expense-item">{{expense.description}} - ${{expense.value}} <span @click="deleteItem('exp',index,expense.value)" class="delete-card">X</span></li>
                     </ul>
                 </div>
             </div>
@@ -105,6 +105,7 @@ export default {
             }
 
             console.log(this.allIncomes);
+            console.log(this.allExpenses)
 
             this.input.description = null;
             this.input.value = 0;
@@ -134,6 +135,22 @@ export default {
                 console.log(error);
                 this.error = error.message;
             })
+        },
+
+        deleteItem(type, index, value) {
+          // Removes item and updates totals
+            let numValue = parseInt(value);
+            if (type === 'inc') {
+                this.grandTotal -= numValue;
+                this.totalIncome -= numValue;
+                this.allIncomes.splice(index, 1);
+
+                console.log(this.totalIncome)
+            } else if (type === 'exp') {
+                this.grandTotal += numValue;
+                this.totalExpense += numValue;
+                this.allExpenses.splice(index, 1);
+            }
         }
     },
     computed: {
@@ -146,12 +163,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.row {
+    margin: 2.5rem;
+
+}
+
 .expense-item {
     background-color: #ff00006b;
+    margin-bottom: .5rem;
 }
 
 .income-item {
     background-color: #00800070;
+    margin-bottom: .5rem;
 }
 
 #value {

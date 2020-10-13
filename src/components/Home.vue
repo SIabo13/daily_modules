@@ -1,7 +1,6 @@
 <template>
 <div class="container pb-5 pt-5">
  
-<app-nav></app-nav>
     <div class="row">
        
 

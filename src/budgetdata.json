@@ -1,21 +1,202 @@
+
 {
-  "grandTotal": 1370,
-  "allIncomes": [{
-    "type": "income",
-    "description": "chicken nugget",
-    "value": "600"
-  }, {
-    "type": "income",
-    "description": "paycheck",
-    "value": "800"
-  }],
-  "allExpenses": [{
-    "type": "expense",
-    "description": "carpayment",
-    "value": "500"
-  }, {
-    "type": "expense",
-    "description": "eating out ",
-    "value": "30"
-  }]
+  "location": {
+    "name": "New York",
+    "region": "New York",
+    "country": "United States of America",
+    "lat": 40.71,
+    "lon": -74.01,
+    "tz_id": "America/New_York",
+    "localtime_epoch": 1602608719,
+    "localtime": "2020-10-13 13:05"
+  },
+  "current": {
+    "last_updated_epoch": 1602607509,
+    "last_updated": "2020-10-13 12:45",
+    "temp_c": 14.0,
+    "temp_f": 57.2,
+    "is_day": 1,
+    "condition": {
+      "text": "Light rain",
+      "icon": "//cdn.weatherapi.com/weather/64x64/day/296.png",
+      "code": 1183
+    },
+    "wind_mph": 0.0,
+    "wind_kph": 0.0,
+    "wind_degree": 36,
+    "wind_dir": "NE",
+    "pressure_mb": 1013.0,
+    "pressure_in": 30.4,
+    "precip_mm": 1.5,
+    "precip_in": 0.06,
+    "humidity": 94,
+    "cloud": 100,
+    "feelslike_c": 12.4,
+    "feelslike_f": 54.2,
+    "vis_km": 4.8,
+    "vis_miles": 2.0,
+    "uv": 4.0,
+    "gust_mph": 18.1,
+    "gust_kph": 29.2
+  }
 }
+
+
+
+
+
+{
+  "location": {
+      "name": "New York",
+      "region": "New York",
+      "country": "United States of America",
+      "lat": 40.71,
+      "lon": -74.01,
+      "tz_id": "America/New_York",
+      "localtime_epoch": 1602608911,
+      "localtime": "2020-10-13 13:08"
+  },
+  "current": {
+      "last_updated_epoch": 1602608406,
+      "last_updated": "2020-10-13 13:00",
+      "temp_c": 14.4,
+      "temp_f": 57.9,
+      "is_day": 1,
+      "condition": {
+          "text": "Mist",
+          "icon": "//cdn.weatherapi.com/weather/64x64/day/143.png",
+          "code": 1030
+      },
+      "wind_mph": 0.0,
+      "wind_kph": 0.0,
+      "wind_degree": 36,
+      "wind_dir": "NE",
+      "pressure_mb": 1012.0,
+      "pressure_in": 30.4,
+      "precip_mm": 1.5,
+      "precip_in": 0.06,
+      "humidity": 93,
+      "cloud": 100,
+      "feelslike_c": 12.9,
+      "feelslike_f": 55.2,
+      "vis_km": 9.7,
+      "vis_miles": 6.0,
+      "uv": 4.0,
+      "gust_mph": 18.1,
+      "gust_kph": 29.2
+  },
+  "forecast": {
+      "forecastday": [
+          {
+              "date": "2020-10-13",
+              "date_epoch": 1602547200,
+              "day": {
+                  "maxtemp_c": 18.8,
+                  "maxtemp_f": 65.8,
+                  "mintemp_c": 14.7,
+                  "mintemp_f": 58.5,
+                  "avgtemp_c": 16.4,
+                  "avgtemp_f": 61.6,
+                  "maxwind_mph": 15.4,
+                  "maxwind_kph": 24.8,
+                  "totalprecip_mm": 10.3,
+                  "totalprecip_in": 0.41,
+                  "avgvis_km": 8.9,
+                  "avgvis_miles": 5.0,
+                  "avghumidity": 81.0,
+                  "daily_will_it_rain": 1,
+                  "daily_chance_of_rain": "99",
+                  "daily_will_it_snow": 0,
+                  "daily_chance_of_snow": "0",
+                  "condition": {
+                      "text": "Moderate rain",
+                      "icon": "//cdn.weatherapi.com/weather/64x64/day/302.png",
+                      "code": 1189
+                  },
+                  "uv": 2.0
+              },
+              "astro": {
+                  "sunrise": "07:06 AM",
+                  "sunset": "06:18 PM",
+                  "moonrise": "02:52 AM",
+                  "moonset": "05:01 PM",
+                  "moon_phase": "Waning Crescent",
+                  "moon_illumination": "21"
+              },
+              "hour": [
+                  {
+                      "time_epoch": 1602561600,
+                      "time": "2020-10-13 00:00",
+                      "temp_c": 8.8,
+                      "temp_f": 47.8,
+                      "is_day": 0,
+                      "condition": {
+                          "text": "Moderate rain",
+                          "icon": "//cdn.weatherapi.com/weather/64x64/night/302.png",
+                          "code": 1189
+                      },
+                      "wind_mph": 15.7,
+                      "wind_kph": 25.2,
+                      "wind_degree": 69,
+                      "wind_dir": "ENE",
+                      "pressure_mb": 1015.0,
+                      "pressure_in": 30.5,
+                      "precip_mm": 2.0,
+                      "precip_in": 0.08,
+                      "humidity": 87,
+                      "cloud": 100,
+                      "feelslike_c": 8.8,
+                      "feelslike_f": 47.8,
+                      "windchill_c": 8.8,
+                      "windchill_f": 47.8,
+                      "heatindex_c": 10.8,
+                      "heatindex_f": 51.4,
+                      "dewpoint_c": 13.0,
+                      "dewpoint_f": 55.4,
+                      "will_it_rain": 1,
+                      "chance_of_rain": "97",
+                      "will_it_snow": 0,
+                      "chance_of_snow": "0",
+                      "vis_km": 8.3,
+                      "vis_miles": 5.0,
+                      "gust_mph": 23.0,
+                      "gust_kph": 37.1
+                  },
+                  {
+                      "time_epoch": 1602565200,
+                      "time": "2020-10-13 01:00",
+                      "temp_c": 12.0,
+                      "temp_f": 53.6,
+                      "is_day": 0,
+                      "condition": {
+                          "text": "Light rain",
+                          "icon": "//cdn.weatherapi.com/weather/64x64/night/296.png",
+                          "code": 1183
+                      },
+                      "wind_mph": 15.4,
+                      "wind_kph": 24.8,
+                      "wind_degree": 67,
+                      "wind_dir": "ENE",
+                      "pressure_mb": 1015.0,
+                      "pressure_in": 30.4,
+                      "precip_mm": 2.6,
+                      "precip_in": 0.1,
+                      "humidity": 88,
+                      "cloud": 100,
+                      "feelslike_c": 12.0,
+                      "feelslike_f": 53.6,
+                      "windchill_c": 12.0,
+                      "windchill_f": 53.6,
+                      "heatindex_c": 13.0,
+                      "heatindex_f": 55.4,
+                      "dewpoint_c": 13.2,
+                      "dewpoint_f": 55.8,
+                      "will_it_rain": 1,
+                      "chance_of_rain": "96",
+                      "will_it_snow": 0,
+                      "chance_of_snow": "0",
+                      "vis_km": 7.7,
+                      "vis_miles": 4.0,
+                      "gust_mph": 23.0,
+                      "gust_kph": 37.1
+                  }
