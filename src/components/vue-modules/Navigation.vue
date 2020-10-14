@@ -29,6 +29,11 @@ import Dropdown from './Dropdown.vue';
 import Search from './Search';
 
 export default {
+  data(){
+    return{
+      query:String
+    }
+  },
   components:{
     appDropdown:Dropdown,
     appSearch:Search

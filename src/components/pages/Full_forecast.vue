@@ -25,13 +25,14 @@
         </div>
 
     </div>
-    <button @click="getWeather" class="btn btn-success">Check Api</button>
+    <button @click="getWeather(query)" class="btn btn-success">Check Api</button>
 
 </div>
 </template>
 
 <script>
 // http://api.weatherstack.com/current?access_key=fcffe13ef0115ba41e0fbb1153981046&query=New%20York
+import { bus } from '../../main';
 
 export default {
     data() {
@@ -39,15 +40,15 @@ export default {
             forecast: {},
             current: {},
             location: {},
-            query: "Philadelphia",
+            query: "New York",
             days: 2,
             timestamp: String
 
         }
     },
     methods: {
-        getWeather() {
-            fetch(`http://api.weatherapi.com/v1/forecast.json?key=1590231e5d674493844164905201310&q=${this.query}&days=${this.days}`)
+        getWeather(query) {
+            fetch(`http://api.weatherapi.com/v1/forecast.json?key=1590231e5d674493844164905201310&q=${query}&days=${this.days}`)
                 .then((response) => {
                     if (response.ok) {
                         return response.json();
@@ -86,13 +87,18 @@ export default {
 
             }
 
-        }
-    },
-    computed: {
+        },
         
     },
+    computed: {
+        getSearch(){
+          bus.$on('query',(data) =>{
+            this.query = data;
+          })
+        }
+    },
     mount() {
-        this.updateTime();
+      this.getWeather();
     }
 }
 </script>
