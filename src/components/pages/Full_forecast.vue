@@ -3,7 +3,8 @@
 
     <div class="row">
 
-        <div class="content-box bg-light col-10 d-block m-auto">
+<keep-alive>
+        <app-container class="col-10 d-block m-auto">
             <h1 class="text-center weather_title">{{ location.name }}</h1>
             <div class="row">
                 <div class="col-md-6">
@@ -21,9 +22,8 @@
                     <h4 class="secondary_info">cloudy</h4>
                 </div>
             </div>
-
-        </div>
-
+        </app-container>
+</keep-alive>
     </div>
     <button @click="getWeather(query)" class="btn btn-success">Check Api</button>
 
@@ -33,8 +33,13 @@
 <script>
 // http://api.weatherstack.com/current?access_key=fcffe13ef0115ba41e0fbb1153981046&query=New%20York
 import { bus } from '../../main';
+import appContainer from "../vue-modules/Content_Container.vue"
 
 export default {
+    components:{
+        appContainer
+    },
+
     data() {
         return {
             forecast: {},

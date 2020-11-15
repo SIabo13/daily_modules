@@ -1,7 +1,11 @@
 <template>
-<div class="content-box bg-light">
-    <h2>To Do List</h2>
-    <h1 v-if="todoList.length == 0" v-show="!showForm"> Add Something</h1>
+
+<keep-alive>
+
+<content-container>
+
+<h2>To Do List</h2>
+    <h1 v-if="todoList.length == 0" v-show ="!showForm"> Add Something</h1>
     <div>
         <div class="list-box" v-show="!showForm">
 
@@ -11,8 +15,8 @@
             </ul>
         </div>
         <button v-show="!showForm" @click="showForm = !showForm" class="btn btn-primary mt-3">Add TODO</button>
-        <button @click="saveList" class="btn btn-primary mt-3">Save List</button>
-        <button @click="deleteCache" class="btn btn-primary mt-3">delete List</button>
+        <button @click.prevent="saveList" class="btn btn-primary mt-3">Save List</button>
+        <button class="btn btn-primary mt-3">delete List</button>
 
     </div>
 
@@ -20,22 +24,25 @@
         <div class="form-group mt-5">
             <label for="exampleInputEmail1">Add to Your List</label>
             <input ref="input" v-model="itemInput" type="text" class="form-control" placeholder="Enter To Do">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
 
         <button @click.prevent="addItem(itemInput)" class="btn btn-primary">Submit</button>
         <button @click.prevent="showForm = !showForm" class="btn btn-primary">Back to List</button>
     </form>
+</content-container>
+</keep-alive>
 
-</div>
 </template>
 
 <script>
-import ListItem from './Todo-list-item.vue';
+import ListItem from './Todo-list-item.vue'
+import ContentContainer from './Content_Container.vue'
+import db from "../firebaseinit"
 
 export default {
     components: {
-        appListItem: ListItem
+        appListItem: ListItem,
+        ContentContainer
     },
     data() {
         return {
@@ -48,89 +55,51 @@ export default {
     },
     methods: {
         addItem(input) {
+            console.log("im running biach")
             if (input != null) {
+                this.$emit("input event",input)
                 this.todoList.push(input);
                 this.itemInput = null;
                 this.$refs.input.focus()
             }
 
         },
-        saveList() {
-            if (this.todoList.length > 0) {
-                fetch('https://modular-planner.firebaseio.com/todos.json', {
-                    method: 'POST',
-                    headers: {
-                        "Content-type": 'application/json'
-                    },
-                    body: JSON.stringify({
-                        todoList: this.todoList,
+        saveList(){
+            db.ref("todos/").set({
+                todoList: this.todoList
+        });
 
-                    }),
+            
+        },
+        
+       
 
-                }).then(response => {
-                    if (response.ok) {
-                        //....
-                    } else {
-                        throw new Error('Could not save data!');
-                    }
-                }).catch(error => {
-                    console.log(error);
-                    this.error = error.message;
-                })
+         loadTodoList(){
+          let _this = this
+          let ref = db.ref('todos');
+          ref.on('value',gotData);
+           
+            function gotData(data){               
+
+                if(_this.todoList.length == 0){
+                    data.val().todoList.forEach(element => {
+                    _this.todoList.push(element)
+                });
+                }
+                
+
+                
+
 
             }
-        },
-        deleteCache() {
-            // Deletes third oldest entry
-            
-                fetch('https://modular-planner.firebaseio.com/todos.json', {
-                        method: 'DELETE'
 
-                    })
-                    .then(response => response.json())
-                    .then(response => {
-                        // Delete third oldest entry and todo list
-                        console.log(response)
-                       
-
-                    })
-                    
-
-            
-        },
-        loadTodoList() {
-            // Repopulate the list onload from database
-            fetch('https://modular-planner.firebaseio.com/todos.json')
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json();
-                    }
-                })
-
-                .then((data) => {
-                    this.isLoading = false;
-                    const results = [];
-
-                    let list = data[Object.keys(data)[Object.keys(data).length -1]];
-
-                    for (let i = 0; i < list.todoList.length; i++) {
-                        results.push(list.todoList[i])
-                    }
-
-                    //    console.log(this.listCache)
-                    this.todoList = results;
-                })
-                .catch((error) => {
-                    console.log(error);
-                    this.isLoading = false;
-                    this.error = "Failed to fetch data - please try again later";
-                });
-        },
+        }
         
     },
     mounted() {
             this.loadTodoList();
-        }
+        },
+    
 }
 </script>
 

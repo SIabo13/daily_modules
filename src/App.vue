@@ -39,6 +39,13 @@ export default {
 </script>
 
 <style>
+
+
+
+#app{
+background:#007bff;
+}
+
 #wrapper {
     overflow-x: hidden;
  }

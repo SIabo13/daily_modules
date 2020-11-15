@@ -1,12 +1,15 @@
 <template>
 <div class="container pb-5 pt-5">
   <div class="row">
-    
-      <div  v-for="(note,index) in allNotes" :key="index" class="content-box bg-light col-md-3 m-3">
-        <span @click="allNotes.splice(index,1)" class="delete-card">X</span>
+
+    <app-container class="col-md-3 m-3"  v-for="(note,index) in allNotes" :key="index">
+      <span @click="allNotes.splice(index,1)" class="delete-card">X</span>
     <h2>{{note.title}}</h2>
     <p>{{note.body}}</p>
-  </div>
+
+    </app-container>
+    
+     
   
     
   </div>
@@ -15,7 +18,12 @@
 </template>
 
 <script>
+import appContainer from "../vue-modules/Content_Container.vue"
+
 export default {
+  components:{
+    appContainer
+  },
 data(){
   return {
     allNotes:[]

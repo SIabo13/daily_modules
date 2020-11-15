@@ -5,9 +5,13 @@
        
 
         <div class="col">
-            <div class="content-box bg-light">
+
+            <content-container>
+
                 <h2 class="text-center">Greetings: User</h2>
-            </div>
+
+            </content-container>
+           
 
         </div>
 
@@ -57,6 +61,8 @@ import News from './vue-modules/News.vue';
 import Notes from './vue-modules/Notes.vue';
 import Todo from './vue-modules/Todo.vue';
 import Weather from './vue-modules/Weather.vue';
+import appContainer from './vue-modules/Content_Container'
+import ContentContainer from './vue-modules/Content_Container.vue';
 
 
 export default {
@@ -66,6 +72,8 @@ export default {
         appNotes: Notes,
         appTodo: Todo,
         appWeather: Weather,
+        appContainer,
+        ContentContainer
        
     },
     data() {
